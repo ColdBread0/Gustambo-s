@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACUA - Alerta y Control del Uso del Agua</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <!-- Formas de fondo -->
+    <div class="background-shapes">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+        <div class="shape shape4"></div>
+    </div>
+
+    <!-- Burbujas flotantes -->
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+    <!-- Partículas de agua -->
+    <div class="water-particles">
+        <div class="water-particle"></div>
+        <div class="water-particle"></div>
+        <div class="water-particle"></div>
+        <div class="water-particle"></div>
+        <div class="water-particle"></div>
+        <div class="water-particle"></div>
+        <div class="water-particle"></div>
+        <div class="water-particle"></div>
+        <div class="water-particle"></div>
+        <div class="water-particle"></div>
+        <div class="water-particle"></div>
+        <div class="water-particle"></div>
+        <div class="water-particle"></div>
+        <div class="water-particle"></div>
+        <div class="water-particle"></div>
+    </div>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo-container">
+                    <!-- LOGO -->
+                    <img src="IMAGENES/logo-acua.png" alt="ACUA Logo" class="logo-img">
+                    <!-- SLOGAN -->
+                    <img src="IMAGENES/Slogan-acua.png" alt="ACUA Slogan" class="slogan-img">
+                </div>
+            </div>
+
+            <div class="nav-menu">
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">Empresa</a>
+                    <div class="dropdown-content">
+                        <a href="#quienes-somos">¿Quiénes somos?</a>
+                        <a href="#vision">Visión</a>
+                        <a href="#mision">Misión</a>
+                        <a href="#valores">Valores</a>
+                    </div>
+                </div>
+
+                <div class="nav-item">
+                    <a href="#equipo" class="nav-link">Equipo y Comunidad</a>
+                </div>
+
+                <div class="nav-item">
+                    <a href="#conversemos" class="nav-link">Conversemos</a>
+                </div>
+
+                <!-- BOTÓN DE LOGIN -->
+                <button class="login-button" onclick="window.location.href='login.html'">Iniciar Sesión</button>
+
+                <div class="nav-toggle">
+                </div>
+            </div>
+
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION CON CARRUSEL -->
+    <section class="hero">
+        <div class="carousel-container">
+            <div class="carousel-slide">
+                <div class="slide active">
+                    <!-- IMAGEN 1 DEL CARRUSEL - COLOCA AQUÍ TU IMAGEN PRINCIPAL -->
+                    <img src="IMAGENES/Carrusel3.jpg" alt="Monitoreo de Agua">
+                    <div class="slide-content">
+                        <h1>Monitoreo Inteligente del Agua</h1>
+                        <p>Tecnología innovadora para colegios públicos</p>
+                        <button class="cta-button">Conoce más</button>
+                    </div>
+                </div>
+
+                <div class="slide">
+                    <!-- IMAGEN 2 DEL CARRUSEL - COLOCA AQUÍ TU SEGUNDA IMAGEN -->
+                    <img src="IMAGENES/Carrusel2.jpg" alt="Calidad del Agua">
+                    <div class="slide-content">
+                        <h1>Calidad Garantizada</h1>
+                        <p>Datos precisos y visualizaciones claras</p>
+                        <button class="cta-button">Descubre cómo</button>
+                    </div>
+                </div>
+
+                <div class="slide">
+                    <img src="IMAGENES/Carrusel.jpg" alt="Alertas en Tiempo Real">
+                    <div class="slide-content">
+                        <h1>Alertas en Tiempo Real</h1>
+                        <p>Protección continua de recursos hídricos</p>
+                        <button class="cta-button">Solicita demo</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-nav">
+                <button class="nav-dot active" onclick="currentSlide(1)"></button>
+                <button class="nav-dot" onclick="currentSlide(2)"></button>
+                <button class="nav-dot" onclick="currentSlide(3)"></button>
+            </div>
+
+            <button class="carousel-btn prev" onclick="changeSlide(-1)">❮</button>
+            <button class="carousel-btn next" onclick="changeSlide(1)">❯</button>
+        </div>
+    </section>
+
+    <!-- SERVICIOS SECTION -->
+    <section class="services">
+        <div class="container">
+            <h2>Nuestros Servicios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <div class="icon-water"></div>
+                    </div>
+                    <h3>Monitoreo Continuo</h3>
+                    <p>Supervisión 24/7 de la calidad del agua en tiempo real</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <div class="icon-alert"></div>
+                    </div>
+                    <h3>Alertas Inteligentes</h3>
+                    <p>Notificaciones inmediatas ante cualquier anomalía</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <div class="icon-data"></div>
+                    </div>
+                    <h3>Visualización de Datos</h3>
+                    <p>Reportes claros y comprensibles para toma de decisiones</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="about" id="quienes-somos">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>¿Quiénes Somos?</h2>
+                    <p>ACUA es una empresa tecnológica especializada en el monitoreo y control de la calidad del agua. Nos enfocamos en brindar soluciones innovadoras para instituciones educativas, garantizando el acceso a agua segura y de calidad.</p>
+
+                    <div class="mission-vision">
+                        <div class="mv-item" id="mision">
+                            <h3>Misión</h3>
+                            <p>Proporcionar una herramienta tecnológica innovadora y accesible para el monitoreo continuo y en tiempo real de la calidad del agua en colegios.</p>
+                        </div>
+
+                        <div class="mv-item" id="vision">
+                            <h3>Visión</h3>
+                            <p>Ser la empresa líder en tecnología de monitoreo hídrico educativo, contribuyendo a la salud y bienestar de las comunidades estudiantiles.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-image">
+                    <img src="IMAGENES/destacada-mala-calidad-del-agua.jpg" alt="Equipo ACUA">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VALORES SECTION -->
+    <section class="values" id="valores">
+        <div class="container">
+            <h2>Nuestros Valores</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <h3>Innovación</h3>
+                    <p>Desarrollo continuo de tecnologías avanzadas</p>
+                </div>
+                <div class="value-card">
+                    <h3>Responsabilidad</h3>
+                    <p>Compromiso con la salud y el medio ambiente</p>
+                </div>
+                <div class="value-card">
+                    <h3>Calidad</h3>
+                    <p>Excelencia en cada servicio que ofrecemos</p>
+                </div>
+                <div class="value-card">
+                    <h3>Accesibilidad</h3>
+                    <p>Soluciones alcanzables para todos los colegios</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="contact-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>¿Quieres que supervisemos el agua de tu colegio?</h2>
+                <p>Únete a la revolución del monitoreo inteligente del agua. Protege la salud de tu comunidad educativa con tecnología de punta.</p>
+                <!-- AQUÍ COLOCA EL ENLACE A TU PÁGINA DE CONTACTO -->
+                <a href="TU_PAGINA_DE_CONTACTO.html" class="contact-btn">Contáctanos Ya</a>
+            </div>
+        </div>
+    </section>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Participantes del Proyecto</h3>
+                    <ul>
+                        <li>Alan David Asprilla</li>
+                        <li>Kevin Alejandro Muñoz</li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Ubicación de Sedes</h3>
+                    <div class="location">
+                        <p><strong>Oficina Principal:</strong></p>
+                        <p>Cr 73c #91-28</p>
+                    </div>
+                    <div class="location">
+                        <p><strong>Otras Sucursales:</strong></p>
+                        <p>Envigado, la frontera calle #10 - 20</p>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Redes Sociales</h3>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/h2observa_3/" target="_blank">
+                            <span class="social-icon instagram">📷</span> Instagram
+                        </a>
+                        <a href="https://x.com/H2Observa6094" target="_blank">
+                            <span class="social-icon twitter"></span> Twitter/X
+                        </a>
+                        <a href="mailto:uacua2025@gmail.com">
+                            <span class="social-icon email">✉️</span> uacua2025@gmail.com
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 ACUA - Alerta y Control del Uso del Agua. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
