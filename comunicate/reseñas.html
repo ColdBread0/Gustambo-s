@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reseñas - Monitoreo de Calidad de Agua</title>
+    <link rel="stylesheet" href="reseñas.css">
+</head> 
+<body>
+    <!-- Fondo con formas abstractas de agua -->
+    <div class="background-shapes">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+        <div class="shape shape4"></div>
+    </div>
+
+    <!-- Burbujas flotantes -->
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+    <!-- Contenedor principal -->
+    <div class="reviews-container">
+        <!-- Header con ilustración de agua -->
+        <div class="header">
+            <div class="header-content">
+                <h1>Comparte tu Experiencia</h1>
+                <p>Tu opinión es importante para mejorar nuestro sistema</p>
+            </div>
+        </div>
+
+        <!-- Formulario de reseñas -->
+        <div class="reviews-form">
+            <div class="form-title">
+                📝 Escribe tu Reseña
+            </div>
+
+            <form id="reviewsForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">Nombre</label>
+                        <input type="text" id="firstName" name="firstName" placeholder="Tu nombre" required>
+                        <span class="icon">👤</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName">Apellido</label>
+                        <input type="text" id="lastName" name="lastName" placeholder="Tu apellido" required>
+                        <span class="icon">👤</span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico</label>
+                        <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+                        <span class="icon">📧</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Teléfono</label>
+                        <input type="tel" id="phone" name="phone" placeholder="123-456-7890">
+                        <span class="icon">📞</span>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="review">Tu Reseña</label>
+                    <textarea id="review" name="review" placeholder="Comparte tu experiencia con nuestro sistema de monitoreo de calidad de agua..." required></textarea>
+                    <span class="icon textarea-icon">✍️</span>
+                </div>
+
+                <div class="rating-group">
+                    <label>Calificación:</label>
+                    <div class="star-rating">
+                        <input type="radio" id="star5" name="rating" value="5">
+                        <label for="star5" title="Excelente">⭐</label>
+                        <input type="radio" id="star4" name="rating" value="4">
+                        <label for="star4" title="Muy bueno">⭐</label>
+                        <input type="radio" id="star3" name="rating" value="3">
+                        <label for="star3" title="Bueno">⭐</label>
+                        <input type="radio" id="star2" name="rating" value="2">
+                        <label for="star2" title="Regular">⭐</label>
+                        <input type="radio" id="star1" name="rating" value="1">
+                        <label for="star1" title="Necesita mejorar">⭐</label>
+                    </div>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="button" class="back-button" onclick="goBack()">
+                        🏠 Regresar al Inicio
+                    </button>
+                    <button type="submit" class="submit-button">
+                        📤 Enviar Reseña
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Gracias por ayudarnos a mejorar el monitoreo de calidad de agua</p>
+        </div>
+    </div>
+
+    <script>
+        // Manejo del formulario
+        document.getElementById('reviewsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const review = document.getElementById('review').value;
+            const rating = document.querySelector('input[name="rating"]:checked');
+            
+            if (firstName && lastName && email && review && rating) {
+               
+                alert('¡Gracias por tu reseña! Ha sido enviada exitosamente.');
+                // Ejemplo: enviar datos a servidor
+                // window.location.href = 'dashboard.html';
+            } else {
+                alert('Por favor, completa todos los campos obligatorios y selecciona una calificación');
+            }
+        });
+
+        
+        function goBack() {
+            
+            window.location.href = 'index.html';
+           
+        }
+
+        
+        document.querySelectorAll('input, textarea').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.transform = 'scale(1.02)';
+                this.parentElement.style.boxShadow = '0 0 20px rgba(64, 224, 208, 0.3)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.style.transform = 'scale(1)';
+                this.parentElement.style.boxShadow = 'none';
+            });
+        });
+
+        
+        document.querySelectorAll('.star-rating input').forEach(star => {
+            star.addEventListener('change', function() {
+                const rating = this.value;
+                const stars = document.querySelectorAll('.star-rating label');
+                
+                stars.forEach((star, index) => {
+                    if (index < rating) {
+                        star.style.color = '#FFD700';
+                        star.style.transform = 'scale(1.2)';
+                    } else {
+                        star.style.color = '#ddd';
+                        star.style.transform = 'scale(1)';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Administración</title>
+
+
+    <script>
+        // validación de sesion//
+        const usuario = sessionStorage.getItem('usuario');
+        if (usuario !== 'admin') {
+            alert('Acceso no autorizado. Debes iniciar sesión como administrador.');
+            window.location.href = 'login.html';
+        }
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Reseñas - Monitoreo de Calidad de Agua</title>
+    <link rel="stylesheet" href="panel.css">
+</head>
+
+<body>
+    <!-- Botón para cerrar sesión -->
+    <button onclick="logout()">Cerrar sesión</button>
+
+    <script>
+        function logout() {
+            sessionStorage.removeItem('usuario');
+            window.location.href = 'login.html';
+        }
+    </script>
+
+    <div class="background-shapes">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+        <div class="shape shape4"></div>
+    </div>
+
+
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+    <!-- Contenedor principal -->
+    <div class="admin-container">
+
+        <div class="header">
+            <div class="header-content">
+                <h1>Panel de Reseñas</h1>
+                <p>Gestiona las reseñas y monitorea la retroalimentación</p>
+            </div>
+        </div>
+
+        <!-- Estadísticas generales -->
+        <div class="stats-section">
+            <div class="stats-title">
+                📊 Estadísticas Generales
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📝</div>
+                    <div class="stat-number" id="totalReviews">24</div>
+                    <div class="stat-label">Total Reseñas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-number" id="averageRating">4.2</div>
+                    <div class="stat-label">Calificación Promedio</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-number" id="totalUsers">18</div>
+                    <div class="stat-label">Usuarios Únicos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-number" id="monthlyGrowth">+12%</div>
+                    <div class="stat-label">Crecimiento Mensual</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filtros y búsqueda -->
+        <div class="filters-section">
+            <div class="filters-title">
+                🔍 Filtros y Búsqueda
+            </div>
+            <div class="filters-container">
+                <div class="filter-group">
+                    <label for="searchInput">Buscar por nombre o email:</label>
+                    <input type="text" id="searchInput" placeholder="Escribir para buscar..." onkeyup="filterReviews()">
+                    <span class="icon">🔍</span>
+                </div>
+                <div class="filter-group">
+                    <label for="ratingFilter">Filtrar por calificación:</label>
+                    <select id="ratingFilter" onchange="filterReviews()">
+                        <option value="all">Todas las calificaciones</option>
+                        <option value="5">⭐⭐⭐⭐⭐ (5 estrellas)</option>
+                        <option value="4">⭐⭐⭐⭐ (4 estrellas)</option>
+                        <option value="3">⭐⭐⭐ (3 estrellas)</option>
+                        <option value="2">⭐⭐ (2 estrellas)</option>
+                        <option value="1">⭐ (1 estrella)</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="dateFilter">Filtrar por fecha:</label>
+                    <select id="dateFilter" onchange="filterReviews()">
+                        <option value="all">Todas las fechas</option>
+                        <option value="today">Hoy</option>
+                        <option value="week">Esta semana</option>
+                        <option value="month">Este mes</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="reviews-section">
+            <div class="reviews-title">
+                💬 Reseñas de Usuarios
+            </div>
+            <div class="reviews-list" id="reviewsList">
+
+            </div>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="action-buttons">
+            <button class="action-btn export-btn" onclick="exportReviews()">
+                📤 Exportar Reseñas
+            </button>
+            <button class="action-btn back-btn" onclick="goBack()">
+                🏠 Regresar al Inicio
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Panel de Administración - Monitoreo de Calidad de Agua</p>
+        </div>
+    </div>
+
+    <script>
+        const reviewsData = [{
+            id: 1,
+            firstName: "María",
+            lastName: "González",
+            email: "maria@email.com",
+            phone: "123-456-7890",
+            review: "Excelente sistema de monitoreo. Los datos son precisos y la interfaz es muy intuitiva. Me ha ayudado mucho a controlar la calidad del agua en mi laboratorio.",
+            rating: 5,
+            date: "2025-01-15",
+            status: "activa"
+        }, {
+            id: 2,
+            firstName: "Carlos",
+            lastName: "Rodríguez",
+            email: "carlos@email.com",
+            phone: "987-654-3210",
+            review: "Muy buena herramienta, aunque podría mejorar la velocidad de actualización de los datos en tiempo real.",
+            rating: 4,
+            date: "2025-01-14",
+            status: "activa"
+        }, {
+            id: 3,
+            firstName: "Ana",
+            lastName: "Martínez",
+            email: "ana@email.com",
+            phone: "555-123-4567",
+            review: "Sistema funcional pero la interfaz podría ser más moderna. Los reportes son útiles.",
+            rating: 3,
+            date: "2025-01-13",
+            status: "activa"
+        }, {
+            id: 4,
+            firstName: "Luis",
+            lastName: "Herrera",
+            email: "luis@email.com",
+            phone: "444-555-6666",
+            review: "Increíble precisión en las mediciones. El dashboard es muy completo y fácil de usar. Totalmente recomendado.",
+            rating: 5,
+            date: "2025-01-12",
+            status: "activa"
+        }, {
+            id: 5,
+            firstName: "Elena",
+            lastName: "Vargas",
+            email: "elena@email.com",
+            phone: "777-888-9999",
+            review: "Buen sistema en general, pero he tenido algunos problemas con la conectividad de los sensores.",
+            rating: 3,
+            date: "2025-01-11",
+            status: "activa"
+        }];
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderReviews(reviewsData);
+            updateStats();
+        });
+
+
+        function renderReviews(reviews) {
+            const reviewsList = document.getElementById('reviewsList');
+            reviewsList.innerHTML = '';
+
+            reviews.forEach(review => {
+                const reviewCard = document.createElement('div');
+                reviewCard.className = 'review-card';
+                reviewCard.innerHTML = `
+                    <div class="review-header">
+                        <div class="user-info">
+                            <div class="user-avatar">👤</div>
+                            <div class="user-details">
+                                <h3>${review.firstName} ${review.lastName}</h3>
+                                <p class="user-contact">📧 ${review.email} | 📞 ${review.phone}</p>
+                            </div>
+                        </div>
+                        <div class="review-meta">
+                            <div class="rating-display">
+                                ${'⭐'.repeat(review.rating)}
+                            </div>
+                            <div class="review-date">📅 ${formatDate(review.date)}</div>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <p>${review.review}</p>
+                    </div>
+                    <div class="review-actions">
+                        <button class="action-btn-small respond-btn" onclick="respondToReview(${review.id})">
+                            💬 Responder
+                        </button>
+                        <button class="action-btn-small edit-btn" onclick="editReview(${review.id})">
+                            ✏️ Editar
+                        </button>
+                        <button class="action-btn-small delete-btn" onclick="deleteReview(${review.id})">
+                            🗑️ Eliminar
+                        </button>
+                    </div>
+                `;
+                reviewsList.appendChild(reviewCard);
+            });
+        }
+
+
+        function filterReviews() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const ratingFilter = document.getElementById('ratingFilter').value;
+            const dateFilter = document.getElementById('dateFilter').value;
+
+            let filteredReviews = reviewsData.filter(review => {
+                const matchesSearch = review.firstName.toLowerCase().includes(searchTerm) ||
+                    review.lastName.toLowerCase().includes(searchTerm) ||
+                    review.email.toLowerCase().includes(searchTerm);
+
+                const matchesRating = ratingFilter === 'all' || review.rating.toString() === ratingFilter;
+
+                const matchesDate = dateFilter === 'all' || checkDateFilter(review.date, dateFilter);
+
+                return matchesSearch && matchesRating && matchesDate;
+            });
+
+            renderReviews(filteredReviews);
+        }
+
+        function checkDateFilter(reviewDate, filter) {
+            const today = new Date();
+            const reviewDateObj = new Date(reviewDate);
+
+            switch (filter) {
+                case 'today':
+                    return reviewDateObj.toDateString() === today.toDateString();
+                case 'week':
+                    const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+                    return reviewDateObj >= weekAgo;
+                case 'month':
+                    const monthAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
+                    return reviewDateObj >= monthAgo;
+                default:
+                    return true;
+            }
+        }
+
+        // Función para formatear fecha
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('es-ES', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        // Función para actualizar estadísticas
+        function updateStats() {
+            const totalReviews = reviewsData.length;
+            const averageRating = (reviewsData.reduce((sum, review) => sum + review.rating, 0) / totalReviews).toFixed(1);
+            const uniqueUsers = new Set(reviewsData.map(review => review.email)).size;
+
+            document.getElementById('totalReviews').textContent = totalReviews;
+            document.getElementById('averageRating').textContent = averageRating;
+            document.getElementById('totalUsers').textContent = uniqueUsers;
+        }
+
+
+        function respondToReview(reviewId) {
+            alert(`Respondiendo a la reseña #${reviewId}`);
+        }
+
+        function editReview(reviewId) {
+            alert(`Editando reseña #${reviewId}`);
+        }
+
+        function deleteReview(reviewId) {
+            if (confirm('¿Estás seguro de que quieres eliminar esta reseña?')) {
+                alert(`Reseña #${reviewId} eliminada`);
+
+            }
+        }
+
+        function exportReviews() {
+            alert('Exportando reseñas...');
+        }
+
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+
+</html>

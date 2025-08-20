@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login - Admin</title>
+</head>
+
+<body>
+    <h1>Login Administrador</h1>
+    <input type="password" id="password" placeholder="Contraseña">
+    <button onclick="login()">Entrar</button>
+
+    <script>
+        function login() {
+            const password = document.getElementById('password').value;
+            // validación de la contraseña //
+            if (password === 'admin753') { // cambia la contraseña //
+                sessionStorage.setItem('usuario', 'admin');
+                window.location.href = 'panel.html';
+
+            } else {
+                alert('contraseña incorrecta');
+            }
+        }
+    </script>
+
+</body>
+
+</html>

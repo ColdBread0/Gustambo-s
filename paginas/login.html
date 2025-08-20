@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoreo de Calidad de Agua - Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+
+    <div class="background-shapes">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+    </div>
+
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <div class="login-container">
+        <div class="header">
+            <div class="header-content">
+                <h1>Panel De Administración</h1>
+                <p>Sistema de control y análisis ambiental</p>
+            </div>
+        </div>
+
+        <!-- Formulario de login -->
+        <div class="login-form">
+            <div class="form-title">Iniciar Sesión</div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <input type="text" id="username" placeholder="Email o Usuario" required>
+                    <span class="icon">👤</span>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" id="password" placeholder="Contraseña" required>
+                    <span class="icon">🔒</span>
+                </div>
+
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="remember"> Recordarme
+                    </label>
+                    <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+                </div>
+
+                <button type="submit" class="login-button">
+                    Iniciar Sesión
+                </button>
+            </form>
+        </div>
+
+        <div class="footer">
+            <p>Sistema desarrollado para el monitoreo ambiental</p>
+        </div>
+    </div>
+
+    <!-- VALIDACIÓN DE USUARIO -->
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Validación de credenciales
+            if (username === 'admin' && password === 'admin753') {
+                sessionStorage.setItem('usuario', 'admin');
+                window.location.href = 'panel.html'; // Redirigir al panel
+            } else {
+                alert('Usuario o contraseña incorrectos');
+            }
+        });
+
+        // Estilos en inputs
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.transform = 'scale(1.02)';
+            });
+
+            input.addEventListener('blur', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+
+</html>
