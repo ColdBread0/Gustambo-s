@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Reseñas - Monitoreo de Calidad de Agua</title>
-    <link rel="stylesheet" href="panel.css">
-</head>
- <script>
+    <title>Panel de Administración</title>
+
+
+    <script>
         // validación de sesion//
         const usuario = sessionStorage.getItem('usuario');
         if (usuario !== 'admin') {
@@ -14,6 +14,14 @@
             window.location.href = 'login.html';
         }
     </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Reseñas - Monitoreo de Calidad de Agua</title>
+    <link rel="stylesheet" href="panel.css">
+</head>
+
+
 
 <body>
      <!-- Botón para cerrar sesión -->
@@ -49,7 +57,7 @@
 
     <!-- Contenedor principal -->
     <div class="admin-container">
-     
+
         <div class="header">
             <div class="header-content">
                 <h1>Panel de Reseñas</h1>
@@ -120,13 +128,13 @@
             </div>
         </div>
 
-       
+
         <div class="reviews-section">
             <div class="reviews-title">
                 💬 Reseñas de Usuarios
             </div>
             <div class="reviews-list" id="reviewsList">
-                
+
             </div>
         </div>
 
@@ -147,72 +155,65 @@
     </div>
 
     <script>
-        
-        const reviewsData = [
-            {
-                id: 1,
-                firstName: "María",
-                lastName: "González",
-                email: "maria@email.com",
-                phone: "123-456-7890",
-                review: "Excelente sistema de monitoreo. Los datos son precisos y la interfaz es muy intuitiva. Me ha ayudado mucho a controlar la calidad del agua en mi laboratorio.",
-                rating: 5,
-                date: "2025-01-15",
-                status: "activa"
-            },
-            {
-                id: 2,
-                firstName: "Carlos",
-                lastName: "Rodríguez",
-                email: "carlos@email.com",
-                phone: "987-654-3210",
-                review: "Muy buena herramienta, aunque podría mejorar la velocidad de actualización de los datos en tiempo real.",
-                rating: 4,
-                date: "2025-01-14",
-                status: "activa"
-            },
-            {
-                id: 3,
-                firstName: "Ana",
-                lastName: "Martínez",
-                email: "ana@email.com",
-                phone: "555-123-4567",
-                review: "Sistema funcional pero la interfaz podría ser más moderna. Los reportes son útiles.",
-                rating: 3,
-                date: "2025-01-13",
-                status: "activa"
-            },
-            {
-                id: 4,
-                firstName: "Luis",
-                lastName: "Herrera",
-                email: "luis@email.com",
-                phone: "444-555-6666",
-                review: "Increíble precisión en las mediciones. El dashboard es muy completo y fácil de usar. Totalmente recomendado.",
-                rating: 5,
-                date: "2025-01-12",
-                status: "activa"
-            },
-            {
-                id: 5,
-                firstName: "Elena",
-                lastName: "Vargas",
-                email: "elena@email.com",
-                phone: "777-888-9999",
-                review: "Buen sistema en general, pero he tenido algunos problemas con la conectividad de los sensores.",
-                rating: 3,
-                date: "2025-01-11",
-                status: "activa"
-            }
-        ];
+        const reviewsData = [{
+            id: 1,
+            firstName: "María",
+            lastName: "González",
+            email: "maria@email.com",
+            phone: "123-456-7890",
+            review: "Excelente sistema de monitoreo. Los datos son precisos y la interfaz es muy intuitiva. Me ha ayudado mucho a controlar la calidad del agua en mi laboratorio.",
+            rating: 5,
+            date: "2025-01-15",
+            status: "activa"
+        }, {
+            id: 2,
+            firstName: "Carlos",
+            lastName: "Rodríguez",
+            email: "carlos@email.com",
+            phone: "987-654-3210",
+            review: "Muy buena herramienta, aunque podría mejorar la velocidad de actualización de los datos en tiempo real.",
+            rating: 4,
+            date: "2025-01-14",
+            status: "activa"
+        }, {
+            id: 3,
+            firstName: "Ana",
+            lastName: "Martínez",
+            email: "ana@email.com",
+            phone: "555-123-4567",
+            review: "Sistema funcional pero la interfaz podría ser más moderna. Los reportes son útiles.",
+            rating: 3,
+            date: "2025-01-13",
+            status: "activa"
+        }, {
+            id: 4,
+            firstName: "Luis",
+            lastName: "Herrera",
+            email: "luis@email.com",
+            phone: "444-555-6666",
+            review: "Increíble precisión en las mediciones. El dashboard es muy completo y fácil de usar. Totalmente recomendado.",
+            rating: 5,
+            date: "2025-01-12",
+            status: "activa"
+        }, {
+            id: 5,
+            firstName: "Elena",
+            lastName: "Vargas",
+            email: "elena@email.com",
+            phone: "777-888-9999",
+            review: "Buen sistema en general, pero he tenido algunos problemas con la conectividad de los sensores.",
+            rating: 3,
+            date: "2025-01-11",
+            status: "activa"
+        }];
 
-      
+
         document.addEventListener('DOMContentLoaded', function() {
             renderReviews(reviewsData);
             updateStats();
         });
 
-     
+
         function renderReviews(reviews) {
             const reviewsList = document.getElementById('reviewsList');
             reviewsList.innerHTML = '';
@@ -255,21 +256,21 @@
             });
         }
 
-        
+
         function filterReviews() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const ratingFilter = document.getElementById('ratingFilter').value;
             const dateFilter = document.getElementById('dateFilter').value;
 
             let filteredReviews = reviewsData.filter(review => {
-                const matchesSearch = review.firstName.toLowerCase().includes(searchTerm) || 
-                                    review.lastName.toLowerCase().includes(searchTerm) ||
-                                    review.email.toLowerCase().includes(searchTerm);
-                
+                const matchesSearch = review.firstName.toLowerCase().includes(searchTerm) ||
+                    review.lastName.toLowerCase().includes(searchTerm) ||
+                    review.email.toLowerCase().includes(searchTerm);
+
                 const matchesRating = ratingFilter === 'all' || review.rating.toString() === ratingFilter;
-                
+
                 const matchesDate = dateFilter === 'all' || checkDateFilter(review.date, dateFilter);
-                
+
                 return matchesSearch && matchesRating && matchesDate;
             });
 
@@ -279,8 +280,8 @@
         function checkDateFilter(reviewDate, filter) {
             const today = new Date();
             const reviewDateObj = new Date(reviewDate);
-            
-            switch(filter) {
+
+            switch (filter) {
                 case 'today':
                     return reviewDateObj.toDateString() === today.toDateString();
                 case 'week':
@@ -309,13 +310,13 @@
             const totalReviews = reviewsData.length;
             const averageRating = (reviewsData.reduce((sum, review) => sum + review.rating, 0) / totalReviews).toFixed(1);
             const uniqueUsers = new Set(reviewsData.map(review => review.email)).size;
-            
+
             document.getElementById('totalReviews').textContent = totalReviews;
             document.getElementById('averageRating').textContent = averageRating;
             document.getElementById('totalUsers').textContent = uniqueUsers;
         }
 
-        
+
         function respondToReview(reviewId) {
             alert(`Respondiendo a la reseña #${reviewId}`);
         }
@@ -327,7 +328,7 @@
         function deleteReview(reviewId) {
             if (confirm('¿Estás seguro de que quieres eliminar esta reseña?')) {
                 alert(`Reseña #${reviewId} eliminada`);
-                
+
             }
         }
 
@@ -340,4 +341,5 @@
         }
     </script>
 </body>
+
 </html>
