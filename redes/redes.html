@@ -1,0 +1,134 @@
+!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - ACUA</title>
+    <link rel="stylesheet" href="redes.css">
+</head>
+
+<body>
+    <!-- Formas de fondo -->
+    <div class="background-shapes">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+    </div>
+
+    <!-- Burbujas flotantes -->
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+    <div class="container">
+        <!-- Botón de regreso -->
+        <a href="http://127.0.0.1:5500/Alan/index.html" class="back-btn">← Volver al Inicio</a>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>Contáctanos</h1>
+            <p>Estamos aquí para ayudarte. Comparte tus dudas, sugerencias o reporta cualquier problema que hayas encontrado.</p>
+        </div>
+
+        <!-- Información de contacto -->
+        <div class="contact-info">
+            <div class="info-card">
+                <h3>Redes Sociales</h3>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/h2observa_3/" target="_blank">
+                        📷 Instagram
+                    </a>
+                    <a href="https://x.com/H2Observa6094" target="_blank">
+                        ✖ Twitter/X
+                    </a>
+                    <a href="mailto:uacua2025@gmail.com">
+                        ✉️ uacua2025@gmail.com
+                    </a>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3>Contactanos con:</h3>
+                <div class="location">
+                    <p><strong>Numero de Telefono y WhatsApp</strong></p>
+                    <p>+57 3114209724</p>
+                    <br>
+                    <p><strong>Hora de servicio al cliente</strong></p>
+                    <p>10:00 a.m - 7:00 p.m Hora Colombia</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulario de contacto -->
+        <div class="form-section">
+            <h2>Formulario de Contacto</h2>
+            <form id="contactForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nombre">Nombre Completo *</label>
+                        <input type="text" id="nombre" name="nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="tel" id="telefono" name="telefono">
+                    </div>
+                    <div class="form-group">
+                        <label for="institucion">Institución/Colegio</label>
+                        <input type="text" id="institucion" name="institucion">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="tipo">Tipo de Consulta *</label>
+                    <select id="tipo" name="tipo" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="consulta_general">Consulta General</option>
+                        <option value="reporte_error">Reporte de Error</option>
+                        <option value="queja">Queja</option>
+                        <option value="sugerencia">Sugerencia</option>
+                        <option value="soporte_tecnico">Soporte Técnico</option>
+                        <option value="cotizacion">Solicitar Cotización</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="asunto">Asunto *</label>
+                    <input type="text" id="asunto" name="asunto" placeholder="Resumen breve del tema" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="mensaje">Mensaje Detallado *</label>
+                    <textarea id="mensaje" name="mensaje" placeholder="Describe tu consulta, problema o sugerencia de manera detallada..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="prioridad">Nivel de Prioridad</label>
+                    <select id="prioridad" name="prioridad">
+                        <option value="baja">Baja</option>
+                        <option value="media" selected>Media</option>
+                        <option value="alta">Alta</option>
+                        <option value="urgente">Urgente</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar Mensaje</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="redes.js"></script>
+</body>
+
+</html>
