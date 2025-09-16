@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reseñas - Monitoreo de Calidad de Agua</title>
+    <link rel="stylesheet" href="reseñas.css">
+</head>
+
+<body>
+    <!-- Fondo con formas abstractas de agua -->
+    <div class="background-shapes">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+        <div class="shape shape4"></div>
+    </div>
+
+    <!-- Burbujas flotantes -->
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+    <!-- Contenedor principal -->
+    <div class="reviews-container">
+        <!-- Header con ilustración de agua -->
+        <div class="header">
+            <div class="header-content">
+                <h1>Comparte tu Experiencia</h1>
+                <p>Tu opinión es importante para mejorar nuestro sistema</p>
+            </div>
+        </div>
+
+        <!-- Formulario de reseñas -->
+        <div class="reviews-form">
+            <div class="form-title">
+                📝 Escribe tu Reseña
+            </div>
+
+            <form id="reviewsForm" onsubmit="enviarResena(event)">
+                <div class="form-group">
+                    <label for="username">Nombre Completo</label>
+                    <input type="text" id="username" name="username" placeholder="Tu nombre completo" required>
+                    <span class="icon">👤</span>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="content">Tu Reseña</label>
+                    <textarea id="content" name="content"
+                        placeholder="Comparte tu experiencia con nuestro sistema de monitoreo de calidad de agua..."
+                        required></textarea>
+                    <span class="icon textarea-icon">✍️</span>
+                </div>
+                <div id="message"></div>
+                <div class="rating-group">
+                    <label>Calificación (Opcional):</label>
+                    <div class="star-rating">
+                        <input type="radio" id="star5" name="rating" value="5">
+                        <label for="star5" title="Excelente">⭐</label>
+                        <input type="radio" id="star4" name="rating" value="4">
+                        <label for="star4" title="Muy bueno">⭐</label>
+                        <input type="radio" id="star3" name="rating" value="3">
+                        <label for="star3" title="Bueno">⭐</label>
+                        <input type="radio" id="star2" name="rating" value="2">
+                        <label for="star2" title="Regular">⭐</label>
+                        <input type="radio" id="star1" name="rating" value="1">
+                        <label for="star1" title="Necesita mejorar">⭐</label>
+                    </div>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="button" class="back-button" onclick="goBack()">
+                        🏠 Regresar al Inicio
+                    </button>
+                    <button type="submit" class="submit-button">
+                        📤 Enviar Reseña
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Sección para mostrar reseñas existentes -->
+        <div class="existing-reviews">
+            <div class="reviews-title">
+                💬 Reseñas de Usuarios
+            </div>
+            <div id="resenas" class="reviews-list">
+                <p>Cargando reseñas...</p>
+            </div>
+        </div>
+<script src="reseñas.js"></script>
+        <!-- Footer -->
+        <div class="footer">
+            <p>Gracias por ayudarnos a mejorar el monitoreo de calidad de agua</p>
+        </div>
+    </div>
+
+ 

@@ -21,12 +21,80 @@
     <link rel="stylesheet" href="panel.css">
 </head>
 
+<script>
+    function enviarResena() {
+      const username = document.getElementById("username").value.trim() || "Anónimo";
+      const content = document.getElementById("content").value.trim();
+      const messageDiv = document.getElementById("message");
 
+      messageDiv.textContent = "";
+
+      if (!content) {
+        messageDiv.textContent = "El contenido de la reseña es obligatorio.";
+        return;
+      }
+
+      fetch("http://localhost/reviews/backend/crear_resena.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name: username,
+          content
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          messageDiv.textContent = data.error;
+        } else {
+          document.getElementById("content").value = "";
+          document.getElementById("username").value = "";
+          alert("¡Reseña enviada con éxito!");
+          //cargarResenas();
+        }
+      })
+      .catch(error => {
+        console.error("Error al enviar reseña:", error);
+        messageDiv.textContent = "Error al conectar con el servidor.";
+      });
+    }
+
+    // function cargarResenas() {
+    //   fetch("http://localhost/reviews/backend/get_reviews.php")
+    //     .then(response => response.json())
+    //     .then(data => {
+    //       const container = document.getElementById("resenas");
+    //       container.innerHTML = "";
+
+    //       if (!Array.isArray(data) || data.length === 0) {
+    //         container.innerHTML = "<p>No hay reseñas disponibles.</p>";
+    //         return;
+    //       }
+
+    //       data.forEach(resena => {
+    //         const div = document.createElement("div");
+    //         div.className = "review";
+    //         div.innerHTML = `
+    //           <strong>${resena.name}</strong><br>
+    //           <small>${resena.created_at}</small>
+    //           <p>${resena.content}</p>
+    //         `;
+    //         container.appendChild(div);
+    //       });
+    //     })
+    //     .catch(err => {
+    //       document.getElementById("resenas").innerHTML = "<p>Error al cargar reseñas.</p>";
+    //     });
+    // }
+
+    // window.onload = cargarResenas;
+  </script>
 
 <body>
-     <!-- Botón para cerrar sesión -->
-    <button onclick="logout()">Cerrar sesión</button>
-
+     
+    
     <script>
         function logout() {
             sessionStorage.removeItem('usuario');
@@ -154,70 +222,34 @@
         </div>
     </div>
 
-    <script>
-        const reviewsData = [{
-            id: 1,
-            firstName: "María",
-            lastName: "González",
-            email: "maria@email.com",
-            phone: "123-456-7890",
-            review: "Excelente sistema de monitoreo. Los datos son precisos y la interfaz es muy intuitiva. Me ha ayudado mucho a controlar la calidad del agua en mi laboratorio.",
-            rating: 5,
-            date: "2025-01-15",
-            status: "activa"
-        }, {
-            id: 2,
-            firstName: "Carlos",
-            lastName: "Rodríguez",
-            email: "carlos@email.com",
-            phone: "987-654-3210",
-            review: "Muy buena herramienta, aunque podría mejorar la velocidad de actualización de los datos en tiempo real.",
-            rating: 4,
-            date: "2025-01-14",
-            status: "activa"
-        }, {
-            id: 3,
-            firstName: "Ana",
-            lastName: "Martínez",
-            email: "ana@email.com",
-            phone: "555-123-4567",
-            review: "Sistema funcional pero la interfaz podría ser más moderna. Los reportes son útiles.",
-            rating: 3,
-            date: "2025-01-13",
-            status: "activa"
-        }, {
-            id: 4,
-            firstName: "Luis",
-            lastName: "Herrera",
-            email: "luis@email.com",
-            phone: "444-555-6666",
-            review: "Increíble precisión en las mediciones. El dashboard es muy completo y fácil de usar. Totalmente recomendado.",
-            rating: 5,
-            date: "2025-01-12",
-            status: "activa"
-        }, {
-            id: 5,
-            firstName: "Elena",
-            lastName: "Vargas",
-            email: "elena@email.com",
-            phone: "777-888-9999",
-            review: "Buen sistema en general, pero he tenido algunos problemas con la conectividad de los sensores.",
-            rating: 3,
-            date: "2025-01-11",
-            status: "activa"
-        }];
 
+    <script>
+        let reviewsData = [];
 
         document.addEventListener('DOMContentLoaded', function() {
-            renderReviews(reviewsData);
-            updateStats();
+            fetchReviews();
         });
 
+        function fetchReviews() {
+            fetch('http://localhost/proyectopia/gustambos/backend/get_reviews.php')
+                .then(response => response.json())
+                .then(data => {
+                    reviewsData = data;
+                    renderReviews(reviewsData);
+                    updateStats();
+                })
+                .catch(err => {
+                    document.getElementById('reviewsList').innerHTML = '<p>Error al cargar reseñas.</p>';
+                });
+        }
 
         function renderReviews(reviews) {
             const reviewsList = document.getElementById('reviewsList');
             reviewsList.innerHTML = '';
-
+            if (!Array.isArray(reviews) || reviews.length === 0) {
+                reviewsList.innerHTML = '<p>No hay reseñas disponibles.</p>';
+                return;
+            }
             reviews.forEach(review => {
                 const reviewCard = document.createElement('div');
                 reviewCard.className = 'review-card';
@@ -226,30 +258,22 @@
                         <div class="user-info">
                             <div class="user-avatar">👤</div>
                             <div class="user-details">
-                                <h3>${review.firstName} ${review.lastName}</h3>
-                                <p class="user-contact">📧 ${review.email} | 📞 ${review.phone}</p>
+                                <h3>${review.name || 'Anónimo'}</h3>
                             </div>
                         </div>
                         <div class="review-meta">
                             <div class="rating-display">
-                                ${'⭐'.repeat(review.rating)}
+                                ${(review.rating && review.rating > 0) ? '⭐'.repeat(review.rating) : ''}
                             </div>
-                            <div class="review-date">📅 ${formatDate(review.date)}</div>
+                            <div class="review-date">📅 ${formatDate(review.created_at)}</div>
                         </div>
                     </div>
                     <div class="review-content">
-                        <p>${review.review}</p>
+                        <p>${review.content}</p>
                     </div>
                     <div class="review-actions">
-                        <button class="action-btn-small respond-btn" onclick="respondToReview(${review.id})">
-                            💬 Responder
-                        </button>
-                        <button class="action-btn-small edit-btn" onclick="editReview(${review.id})">
-                            ✏️ Editar
-                        </button>
-                        <button class="action-btn-small delete-btn" onclick="deleteReview(${review.id})">
-                            🗑️ Eliminar
-                        </button>
+                        <button class="action-btn-small hide-btn" onclick="hideReview(${review.id})">👀 Ocultar</button>
+                        <button class="action-btn-small delete-btn" onclick="deleteReview(${review.id})">🗑️ Eliminar</button>
                     </div>
                 `;
                 reviewsList.appendChild(reviewCard);
@@ -325,21 +349,16 @@
             alert(`Editando reseña #${reviewId}`);
         }
 
-        function deleteReview(reviewId) {
-            if (confirm('¿Estás seguro de que quieres eliminar esta reseña?')) {
-                alert(`Reseña #${reviewId} eliminada`);
 
-            }
-        }
 
         function exportReviews() {
             alert('Exportando reseñas...');
         }
 
         function goBack() {
-            window.location.href = 'index.html';
+            window.location.href = '../Alan/index.html';
         }
     </script>
 </body>
 
-</html>
+</html
