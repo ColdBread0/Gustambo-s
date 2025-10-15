@@ -104,19 +104,21 @@ document.addEventListener('click', e => {
         const action = item.dataset.action;
         
         if (action === 'hide') {
-            // Ocultar para usuarios (solo marcar cambio)
+            // Ocultar para usuarios (solo marcar cambio - NO ocultar en admin)
             card.dataset.hidden = 'true';
+            card.classList.add('hidden-review'); // Clase visual para indicar que está oculta
             text.textContent = 'Mostrar';
             btn.classList.add('showing');
             pendingChanges[reviewId] = 0;
-            showMessage('Cambio marcado: Se ocultará al guardar', 'success');
+            showMessage('Cambio marcado: Se ocultará para usuarios al guardar (visible en admin)', 'success');
         } else {
             // Mostrar a usuarios (solo marcar cambio)
             card.dataset.hidden = 'false';
+            card.classList.remove('hidden-review'); // Quitar clase visual
             text.textContent = 'Visibilidad';
             btn.classList.remove('showing');
             pendingChanges[reviewId] = 1;
-            showMessage('Cambio marcado: Se mostrará al guardar', 'success');
+            showMessage('Cambio marcado: Se mostrará a usuarios al guardar', 'success');
         }
         
         updateChangesBadge();
@@ -147,6 +149,8 @@ function fetchReviews() {
         .then(response => response.json())
         .then(data => {
             reviewsData = data;
+            // IMPORTANTE: Renderizar TODAS las reseñas sin filtrar por visibilidad
+            // En el panel de administrador, todas las reseñas deben ser visibles
             renderReviews(reviewsData);
             updateStats();
         })
@@ -162,15 +166,22 @@ function renderReviews(reviews) {
         reviewsList.innerHTML = '<p>No hay reseñas disponibles.</p>';
         return;
     }
+    
+    // Renderizar TODAS las reseñas (incluyendo las ocultas)
     reviews.forEach(review => {
         const reviewCard = document.createElement('div');
         reviewCard.className = 'review-card';
         reviewCard.id = `review-${review.id}`;
         reviewCard.dataset.reviewId = review.id;
         
-        // Determinar si está oculta
+        // Determinar si está oculta para usuarios (pero VISIBLE en admin)
         const isHidden = review.visible === 0 || review.visible === '0' || review.hidden;
         reviewCard.dataset.hidden = isHidden ? 'true' : 'false';
+        
+        // Si está oculta, agregar clase visual para distinguirla
+        if (isHidden) {
+            reviewCard.classList.add('hidden-review');
+        }
         
         const btnText = isHidden ? 'Mostrar' : 'Visibilidad';
         const btnClass = isHidden ? 'showing' : '';
@@ -215,6 +226,8 @@ function renderReviews(reviews) {
                 <button class="action-btn-small delete-btn btn-delete" onclick="deleteReview(${review.id})" data-id="${review.id}">🗑️ Eliminar</button>
             </div>
         `;
+        
+        // SIEMPRE agregar la tarjeta al DOM (no importa si está oculta)
         reviewsList.appendChild(reviewCard);
     });
 }
@@ -228,12 +241,15 @@ function filterReviews() {
     const ratingFilter = document.getElementById('ratingFilter').value;
     const dateFilter = document.getElementById('dateFilter').value;
 
+    // Filtrar por búsqueda, rating y fecha - PERO NO POR VISIBILIDAD
     let filteredReviews = reviewsData.filter(review => {
         const matchesSearch = (review.name || '').toLowerCase().includes(searchTerm);
         const matchesRating = ratingFilter === 'all' || (review.rating && review.rating.toString() === ratingFilter);
         const matchesDate = dateFilter === 'all' || checkDateFilter(review.created_at, dateFilter);
+        // NO filtrar por visibilidad - mostrar todas las reseñas en el admin
         return matchesSearch && matchesRating && matchesDate;
     });
+    
     renderReviews(filteredReviews);
 }
 
@@ -446,7 +462,7 @@ function enviarResena() {
 }
 
 // ========================================
-// SISTEMA DE GUARDAR CAMBIOS (NUEVO)
+// SISTEMA DE GUARDAR CAMBIOS (MEJORADO)
 // ========================================
 
 // Función para actualizar el badge de cambios pendientes
@@ -474,7 +490,7 @@ function updateChangesBadge() {
     }
 }
 
-// Función para guardar todos los cambios
+// Función para guardar todos los cambios (MEJORADA - Sin recargar reseñas)
 async function saveAllChanges() {
     const changesCount = Object.keys(pendingChanges).length;
     
@@ -509,6 +525,13 @@ async function saveAllChanges() {
             if (data.success) {
                 successCount++;
                 console.log(`✅ Reseña ${reviewId} actualizada a visible=${visible}`);
+                
+                // Actualizar el estado en reviewsData sin recargar
+                const review = reviewsData.find(r => r.id == reviewId);
+                if (review) {
+                    review.visible = visible;
+                    review.hidden = visible === 0;
+                }
             } else {
                 errorCount++;
                 console.error(`❌ Error en reseña ${reviewId}:`, data.message);
@@ -533,10 +556,8 @@ async function saveAllChanges() {
         showMessage(`⚠️ ${successCount} guardados, ${errorCount} fallaron`, 'error');
     }
     
-    // Recargar reseñas para sincronizar con la BD
-    setTimeout(() => {
-        fetchReviews();
-    }, 1000);
+    // NO recargar las reseñas - mantener el estado actual del DOM
+    // Las reseñas ocultas seguirán visibles en el panel de admin
 }
 
 // Inicializar botón de guardar cuando el DOM esté listo

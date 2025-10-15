@@ -3,112 +3,18 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Panel de Administración</title>
-
-
-    <script>
-        // validación de sesion//
-        const usuario = sessionStorage.getItem('usuario');
-        if (usuario !== 'admin') {
-            alert('Acceso no autorizado. Debes iniciar sesión como administrador.');
-            window.location.href = 'login.html';
-        }
-    </script>
-
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Reseñas - Monitoreo de Calidad de Agua</title>
     <link rel="stylesheet" href="panel.css">
 </head>
 
-<script>
-    function enviarResena() {
-      const username = document.getElementById("username").value.trim() || "Anónimo";
-      const content = document.getElementById("content").value.trim();
-      const messageDiv = document.getElementById("message");
-
-      messageDiv.textContent = "";
-
-      if (!content) {
-        messageDiv.textContent = "El contenido de la reseña es obligatorio.";
-        return;
-      }
-
-      fetch("http://localhost/reviews/backend/crear_resena.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          name: username,
-          content
-        })
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.error) {
-          messageDiv.textContent = data.error;
-        } else {
-          document.getElementById("content").value = "";
-          document.getElementById("username").value = "";
-          alert("¡Reseña enviada con éxito!");
-          //cargarResenas();
-        }
-      })
-      .catch(error => {
-        console.error("Error al enviar reseña:", error);
-        messageDiv.textContent = "Error al conectar con el servidor.";
-      });
-    }
-
-    // function cargarResenas() {
-    //   fetch("http://localhost/reviews/backend/get_reviews.php")
-    //     .then(response => response.json())
-    //     .then(data => {
-    //       const container = document.getElementById("resenas");
-    //       container.innerHTML = "";
-
-    //       if (!Array.isArray(data) || data.length === 0) {
-    //         container.innerHTML = "<p>No hay reseñas disponibles.</p>";
-    //         return;
-    //       }
-
-    //       data.forEach(resena => {
-    //         const div = document.createElement("div");
-    //         div.className = "review";
-    //         div.innerHTML = `
-    //           <strong>${resena.name}</strong><br>
-    //           <small>${resena.created_at}</small>
-    //           <p>${resena.content}</p>
-    //         `;
-    //         container.appendChild(div);
-    //       });
-    //     })
-    //     .catch(err => {
-    //       document.getElementById("resenas").innerHTML = "<p>Error al cargar reseñas.</p>";
-    //     });
-    // }
-
-    // window.onload = cargarResenas;
-  </script>
-
 <body>
-     
-    
-    <script>
-        function logout() {
-            sessionStorage.removeItem('usuario');
-            window.location.href = 'login.html';
-        }
-    </script>
-        
     <div class="background-shapes">
         <div class="shape shape1"></div>
         <div class="shape shape2"></div>
         <div class="shape shape3"></div>
         <div class="shape shape4"></div>
     </div>
-
 
     <div class="bubbles">
         <div class="bubble"></div>
@@ -123,9 +29,7 @@
         <div class="bubble"></div>
     </div>
 
-    <!-- Contenedor principal -->
     <div class="admin-container">
-
         <div class="header">
             <div class="header-content">
                 <h1>Panel de Reseñas</h1>
@@ -133,11 +37,8 @@
             </div>
         </div>
 
-        <!-- Estadísticas generales -->
         <div class="stats-section">
-            <div class="stats-title">
-                📊 Estadísticas Generales
-            </div>
+            <div class="stats-title">📊 Estadísticas Generales</div>
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-icon">📝</div>
@@ -162,20 +63,17 @@
             </div>
         </div>
 
-        <!-- Filtros y búsqueda -->
         <div class="filters-section">
-            <div class="filters-title">
-                🔍 Filtros y Búsqueda
-            </div>
+            <div class="filters-title">🔍 Filtros y Búsqueda</div>
             <div class="filters-container">
                 <div class="filter-group">
                     <label for="searchInput">Buscar por nombre o email:</label>
-                    <input type="text" id="searchInput" placeholder="Escribir para buscar..." onkeyup="filterReviews()">
+                    <input type="text" id="searchInput" placeholder="Escribir para buscar...">
                     <span class="icon">🔍</span>
                 </div>
                 <div class="filter-group">
                     <label for="ratingFilter">Filtrar por calificación:</label>
-                    <select id="ratingFilter" onchange="filterReviews()">
+                    <select id="ratingFilter">
                         <option value="all">Todas las calificaciones</option>
                         <option value="5">⭐⭐⭐⭐⭐ (5 estrellas)</option>
                         <option value="4">⭐⭐⭐⭐ (4 estrellas)</option>
@@ -186,7 +84,7 @@
                 </div>
                 <div class="filter-group">
                     <label for="dateFilter">Filtrar por fecha:</label>
-                    <select id="dateFilter" onchange="filterReviews()">
+                    <select id="dateFilter">
                         <option value="all">Todas las fechas</option>
                         <option value="today">Hoy</option>
                         <option value="week">Esta semana</option>
@@ -196,169 +94,30 @@
             </div>
         </div>
 
-
         <div class="reviews-section">
-            <div class="reviews-title">
-                💬 Reseñas de Usuarios
-            </div>
+            <div class="reviews-title">💬 Reseñas de Usuarios</div>
             <div class="reviews-list" id="reviewsList">
-
+                <!-- Las reseñas se cargarán aquí dinámicamente -->
             </div>
         </div>
 
-        <!-- Botones de acción -->
         <div class="action-buttons">
-            <button class="action-btn export-btn" onclick="exportReviews()">
-                📤 Exportar Reseñas
+            <button class="action-btn save-changes-btn" id="saveChangesBtn">
+                💾 Guardar Cambios
             </button>
-            <button class="action-btn back-btn" onclick="goBack()">
-                🏠 Regresar al Inicio
-            </button>
+            <button class="action-btn back-btn" id="backBtn">🏠 Regresar al Inicio</button>
+            <button class="action-btn logout-btn" id="logoutBtn">🚪 Cerrar Sesión</button>
         </div>
 
-        <!-- Footer -->
         <div class="footer">
             <p>Panel de Administración - Monitoreo de Calidad de Agua</p>
         </div>
     </div>
 
-
-    <script>
-        let reviewsData = [];
-
-        document.addEventListener('DOMContentLoaded', function() {
-            fetchReviews();
-        });
-
-        function fetchReviews() {
-            fetch('http://localhost/proyectopia/gustambos/backend/get_reviews.php')
-                .then(response => response.json())
-                .then(data => {
-                    reviewsData = data;
-                    renderReviews(reviewsData);
-                    updateStats();
-                })
-                .catch(err => {
-                    document.getElementById('reviewsList').innerHTML = '<p>Error al cargar reseñas.</p>';
-                });
-        }
-
-        function renderReviews(reviews) {
-            const reviewsList = document.getElementById('reviewsList');
-            reviewsList.innerHTML = '';
-            if (!Array.isArray(reviews) || reviews.length === 0) {
-                reviewsList.innerHTML = '<p>No hay reseñas disponibles.</p>';
-                return;
-            }
-            reviews.forEach(review => {
-                const reviewCard = document.createElement('div');
-                reviewCard.className = 'review-card';
-                reviewCard.innerHTML = `
-                    <div class="review-header">
-                        <div class="user-info">
-                            <div class="user-avatar">👤</div>
-                            <div class="user-details">
-                                <h3>${review.name || 'Anónimo'}</h3>
-                            </div>
-                        </div>
-                        <div class="review-meta">
-                            <div class="rating-display">
-                                ${(review.rating && review.rating > 0) ? '⭐'.repeat(review.rating) : ''}
-                            </div>
-                            <div class="review-date">📅 ${formatDate(review.created_at)}</div>
-                        </div>
-                    </div>
-                    <div class="review-content">
-                        <p>${review.content}</p>
-                    </div>
-                    <div class="review-actions">
-                        <button class="action-btn-small hide-btn" onclick="hideReview(${review.id})">👀 Ocultar</button>
-                        <button class="action-btn-small delete-btn" onclick="deleteReview(${review.id})">🗑️ Eliminar</button>
-                    </div>
-                `;
-                reviewsList.appendChild(reviewCard);
-            });
-        }
-
-
-        function filterReviews() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const ratingFilter = document.getElementById('ratingFilter').value;
-            const dateFilter = document.getElementById('dateFilter').value;
-
-            let filteredReviews = reviewsData.filter(review => {
-                const matchesSearch = review.firstName.toLowerCase().includes(searchTerm) ||
-                    review.lastName.toLowerCase().includes(searchTerm) ||
-                    review.email.toLowerCase().includes(searchTerm);
-
-                const matchesRating = ratingFilter === 'all' || review.rating.toString() === ratingFilter;
-
-                const matchesDate = dateFilter === 'all' || checkDateFilter(review.date, dateFilter);
-
-                return matchesSearch && matchesRating && matchesDate;
-            });
-
-            renderReviews(filteredReviews);
-        }
-
-        function checkDateFilter(reviewDate, filter) {
-            const today = new Date();
-            const reviewDateObj = new Date(reviewDate);
-
-            switch (filter) {
-                case 'today':
-                    return reviewDateObj.toDateString() === today.toDateString();
-                case 'week':
-                    const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
-                    return reviewDateObj >= weekAgo;
-                case 'month':
-                    const monthAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
-                    return reviewDateObj >= monthAgo;
-                default:
-                    return true;
-            }
-        }
-
-        // Función para formatear fecha
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('es-ES', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-        }
-
-        // Función para actualizar estadísticas
-        function updateStats() {
-            const totalReviews = reviewsData.length;
-            const averageRating = (reviewsData.reduce((sum, review) => sum + review.rating, 0) / totalReviews).toFixed(1);
-            const uniqueUsers = new Set(reviewsData.map(review => review.email)).size;
-
-            document.getElementById('totalReviews').textContent = totalReviews;
-            document.getElementById('averageRating').textContent = averageRating;
-            document.getElementById('totalUsers').textContent = uniqueUsers;
-        }
-
-
-        function respondToReview(reviewId) {
-            alert(`Respondiendo a la reseña #${reviewId}`);
-        }
-
-        function editReview(reviewId) {
-            alert(`Editando reseña #${reviewId}`);
-        }
-
-
-
-        function exportReviews() {
-            alert('Exportando reseñas...');
-        }
-
-        function goBack() {
-            window.location.href = '../Alan/index.html';
-        }
-    </script>
+    <!-- Mensajes de notificación -->
+    <div class="success-message" id="successMsg"></div>
+    <div class="error-message" id="errorMsg"></div>
+    
+    <script src="panel.js"></script>
 </body>
-
-</html
+</html>

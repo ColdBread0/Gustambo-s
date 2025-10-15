@@ -91,18 +91,36 @@
 
         <!-- Sección para mostrar reseñas existentes -->
         <div class="existing-reviews">
-            <div class="reviews-title">
-                💬 Reseñas de Usuarios
+            <div class="reviews-header">
+                <div class="reviews-title">
+                    💬 Reseñas de Usuarios
+                </div>
+                <button type="button" class="refresh-button" onclick="cargarResenas()">
+                    🔄 Actualizar
+                </button>
             </div>
-            <div id="resenas" class="reviews-list">
+            
+            <div id="loading" class="loading-message" style="display: none;">
+                <div class="loading-spinner"></div>
                 <p>Cargando reseñas...</p>
             </div>
+            
+            <div id="resenas" class="reviews-list">
+                <div class="empty-message">
+                    <p>No hay reseñas visibles aún.</p>
+                    <p class="empty-subtitle">Haz clic en "Actualizar" para cargar las reseñas disponibles.</p>
+                </div>
+            </div>
         </div>
-<script src="reseñas.js"></script>
+
+        <script src="reseñas.js"></script>
+        
         <!-- Footer -->
         <div class="footer">
             <p>Gracias por ayudarnos a mejorar el monitoreo de calidad de agua</p>
         </div>
     </div>
 
- 
+</body>
+
+</html>
