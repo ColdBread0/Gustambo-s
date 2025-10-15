@@ -4,8 +4,9 @@ header("Content-Type: application/json");
 
 require_once "db.php";
 
-// Solo mostrar reseñas visibles
-$sql = "SELECT * FROM reviews WHERE visible = 1 ORDER BY created_at DESC";
+// Devolver TODAS las reseñas sin filtrar
+// Cada panel decidirá qué mostrar (admin muestra todas, usuarios solo visibles)
+$sql = "SELECT * FROM reviews ORDER BY created_at DESC";
 $result = $conn->query($sql);
 
 $resenas = [];
@@ -17,3 +18,4 @@ if ($result && $result->num_rows > 0) {
 }
 
 echo json_encode($resenas);
+?>

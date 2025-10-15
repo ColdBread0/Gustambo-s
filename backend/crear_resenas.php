@@ -27,8 +27,8 @@ if (!$content) {
     exit;
 }
 
-// Insertar reseña
-$sql = "INSERT INTO reviews (name, content) VALUES (?, ?)";
+// Insertar reseña con visible = 1 por defecto (visible para todos)
+$sql = "INSERT INTO reviews (name, content, visible) VALUES (?, ?, 1)";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ss", $name, $content);
 

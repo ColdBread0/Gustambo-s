@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 require_once "db.php";
 
 // ============================================
-// PROCESAR LA SOLICITUD PARA OCULTAR
+// PROCESAR LA SOLICITUD PARA MOSTRAR
 // ============================================
 $data = json_decode(file_get_contents("php://input"));
 
@@ -33,8 +33,8 @@ if (!isset($data->id)) {
 
 $id = intval($data->id);
 
-// Actualizar para OCULTAR (visible = 0)
-$sql = "UPDATE reviews SET visible = 0 WHERE id = ?";
+// Actualizar para MOSTRAR (visible = 1)
+$sql = "UPDATE reviews SET visible = 1 WHERE id = ?";
 $stmt = $conn->prepare($sql);
 
 if ($stmt) {
@@ -44,13 +44,13 @@ if ($stmt) {
     if ($stmt->affected_rows > 0) {
         echo json_encode([
             "success" => true, 
-            "message" => "Reseña ocultada correctamente",
-            "visible" => 0
+            "message" => "Reseña mostrada correctamente",
+            "visible" => 1
         ]);
     } else {
         echo json_encode([
             "success" => false, 
-            "message" => "No se encontró la reseña o ya está oculta"
+            "message" => "No se encontró la reseña o ya está visible"
         ]);
     }
 
